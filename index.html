@@ -8,6 +8,7 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js">
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
@@ -22,8 +23,8 @@
   <script type="text/javascript">
     let range = n => Array.from(Array(n).keys());
     var appViewModel = function() {
-      this.numberOfRows = ko.observable(5);
-      this.numberOfCellInRow = ko.observable(5);
+      this.numberOfRows = ko.observable(20);
+      this.numberOfCellInRow = ko.observable(20);
     };
     ko.applyBindings(new appViewModel());
   </script>
