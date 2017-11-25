@@ -13,6 +13,18 @@
     <header>
       Snake The Game
     </header>
-    <div class="board"></div>
+    <div class="board" data-bind="foreach: range(numberOfRows())">
+        <div class="row" data-bind="attr: {id: $index}, foreach: range($parent.numberOfCellInRow())">
+          <div class="cell" data-bind="attr: {id: $index}"></div>
+        </div>
+    </div>
   </body>
+  <script type="text/javascript">
+    let range = n => Array.from(Array(n).keys());
+    var appViewModel = function() {
+      this.numberOfRows = ko.observable(5);
+      this.numberOfCellInRow = ko.observable(5);
+    };
+    ko.applyBindings(new appViewModel());
+  </script>
 </html>
