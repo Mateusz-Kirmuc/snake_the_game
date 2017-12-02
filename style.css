@@ -48,8 +48,6 @@ header {
 }
 
 .cell {
-  height: 10px;
-  width: 10px;
   border: solid thin;
 }
 

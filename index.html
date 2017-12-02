@@ -22,7 +22,9 @@
     </div>
     <div class="board" data-bind="foreach: _.range(numberOfRows())">
         <div class="row" data-bind="attr: {id: $index}, foreach: _.range($parent.numberOfCellInRow())">
-          <div class="cell" data-bind="attr: {id: $index}"></div>
+          <div class="cell"
+          data-bind="attr: {id: $index}, style: {width: $root.cellSize(), height:$root.cellSize()}">
+          </div>
         </div>
     </div>
     <div class="arrows-container">
@@ -40,8 +42,10 @@
   </body>
   <script type="text/javascript">
     var AppViewModel = function() {
-      this.numberOfRows = ko.observable(30);
-      this.numberOfCellInRow = ko.observable(30);
+      var self = this;
+      self.numberOfRows = ko.observable(30);
+      self.numberOfCellInRow = ko.observable(30);
+      self.cellSize = ko.observable("10px");
     };
     ko.applyBindings(new AppViewModel());
   </script>
