@@ -15,8 +15,11 @@
   </head>
   <body>
     <header>
-      Snake The Game
+      <h1>Snake The Game</h1>
     </header>
+    <div class="dashboard">
+      <button class="reset-button" type="button">Reset</button>
+    </div>
     <div class="board" data-bind="foreach: _.range(numberOfRows())">
         <div class="row" data-bind="attr: {id: $index}, foreach: _.range($parent.numberOfCellInRow())">
           <div class="cell" data-bind="attr: {id: $index}"></div>
@@ -35,8 +38,8 @@
   </body>
   <script type="text/javascript">
     var AppViewModel = function() {
-      this.numberOfRows = ko.observable(20);
-      this.numberOfCellInRow = ko.observable(20);
+      this.numberOfRows = ko.observable(30);
+      this.numberOfCellInRow = ko.observable(30);
     };
     ko.applyBindings(new AppViewModel());
   </script>
