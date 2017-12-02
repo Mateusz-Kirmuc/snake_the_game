@@ -7,6 +7,9 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js">
     </script>
+    <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js">
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -14,14 +17,13 @@
     <header>
       Snake The Game
     </header>
-    <div class="board" data-bind="foreach: range(numberOfRows())">
-        <div class="row" data-bind="attr: {id: $index}, foreach: range($parent.numberOfCellInRow())">
+    <div class="board" data-bind="foreach: _.range(numberOfRows())">
+        <div class="row" data-bind="attr: {id: $index}, foreach: _.range($parent.numberOfCellInRow())">
           <div class="cell" data-bind="attr: {id: $index}"></div>
         </div>
     </div>
   </body>
   <script type="text/javascript">
-    let range = n => Array.from(Array(n).keys());
     var AppViewModel = function() {
       this.numberOfRows = ko.observable(20);
       this.numberOfCellInRow = ko.observable(20);
