@@ -22,10 +22,10 @@
   </body>
   <script type="text/javascript">
     let range = n => Array.from(Array(n).keys());
-    var appViewModel = function() {
+    var AppViewModel = function() {
       this.numberOfRows = ko.observable(20);
       this.numberOfCellInRow = ko.observable(20);
     };
-    ko.applyBindings(new appViewModel());
+    ko.applyBindings(new AppViewModel());
   </script>
 </html>
