@@ -115,3 +115,12 @@ header {
 .down {
   border-width: 0 0 10px 10px;
 }
+
+
+/* Medium and large devices */
+
+@media (min-width: 992px) {
+  .arrows-container {
+    display: none;
+  }
+}
