@@ -18,6 +18,9 @@
       <h1>Snake The Game</h1>
     </header>
     <div class="dashboard">
+      <select class="size-select"
+      data-bind="options: boardSizes, value: selectedBoardSize, event: {change: changeBoardSize}, optionsCaption: 'Choose board size'">
+      </select>
       <button class="reset-button" type="button">Reset</button>
     </div>
     <div class="board" data-bind="foreach: _.range(numberOfRows())">
@@ -46,6 +49,19 @@
       self.numberOfRows = ko.observable(30);
       self.numberOfCellInRow = ko.observable(30);
       self.cellSize = ko.observable("10px");
+      self.boardSizes = ["small", "medium", "large"];
+      self.selectedBoardSize = ko.observable();
+      self.changeBoardSize = function() {
+        if (self.selectedBoardSize() == "small") {
+          self.numberOfCellInRow(30);
+        }
+        if (self.selectedBoardSize() == "medium") {
+          self.numberOfCellInRow(60);
+        }
+        if (self.selectedBoardSize() == "large") {
+          self.numberOfCellInRow(90);
+        }
+      }
     };
     ko.applyBindings(new AppViewModel());
   </script>
