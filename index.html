@@ -10,6 +10,10 @@
     <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js">
     </script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.js"
+      integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
+      crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -19,7 +23,11 @@
     </header>
     <div class="dashboard">
       <select class="size-select"
-      data-bind="options: boardSizes, value: selectedBoardSize, event: {change: changeBoardSize}, optionsCaption: 'Choose board size'">
+      data-bind="value: selectedBoardSize, event: {change: changeBoardSize}">
+        <option selected>Choose board size</option>
+        <option>small</option>
+        <option data-bind="enable: screenWidth() > 768">medium</option>
+        <option data-bind="enable: screenWidth() > 992">large</option>
       </select>
       <button class="reset-button" type="button">Reset</button>
     </div>
@@ -51,6 +59,7 @@
       self.cellSize = ko.observable("10px");
       self.boardSizes = ["small", "medium", "large"];
       self.selectedBoardSize = ko.observable();
+      self.screenWidth = ko.observable($(window).width());
       self.changeBoardSize = function() {
         if (self.selectedBoardSize() == "small") {
           self.numberOfCellInRow(30);
@@ -63,6 +72,10 @@
         }
       }
     };
-    ko.applyBindings(new AppViewModel());
+    var appViewModel = new AppViewModel();
+    ko.applyBindings(appViewModel);
+    $(window).resize(function() {
+      appViewModel.screenWidth($(window).width());
+    });
   </script>
 </html>
