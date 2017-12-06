@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var AppViewModel = function() {
   var self = this;
   self.numberOfRows = ko.observable(30);
@@ -8,12 +9,12 @@ var AppViewModel = function() {
   self.screenWidth = ko.observable($(window).width());
   self.direction = ko.observable("down");
   self.snakeBody = ko.observableArray([
-    {row: 0, cell: 0},
-    {row: 0, cell: 1},
-    {row: 0, cell: 2},
-    {row: 0, cell: 3},
-    {row: 0, cell: 4},
-    {row: 0, cell: 5}
+    {row: 0, cell: 0, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
+    {row: 0, cell: 1, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
+    {row: 0, cell: 2, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
+    {row: 0, cell: 3, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
+    {row: 0, cell: 4, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
+    {row: 0, cell: 5, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}}
   ]);
 
   self.changeBoardSize = function() {
@@ -27,37 +28,46 @@ var AppViewModel = function() {
       self.numberOfCellInRow(90);
     }
   };
-  self.isInSnakeBody = function(row, cell) {
-    for (var snakeCell of this.snakeBody()) {
-      if (row == snakeCell.row && cell == snakeCell.cell){
-        return true;
-      }
+  self.drawSnake = function() {
+    for (const cell of self.snakeBody()) {
+      $(cell.getCellIdSelector()).toggleClass("snakeCell");
     }
-    return false;
   };
   self.moveSnake = function() {
-    self.snakeBody.shift();
-    var head = _.last(self.snakeBody());
+    const old_tail = self.snakeBody.shift();
+    const old_head = _.last(self.snakeBody());
+    let new_head;
     if (self.direction() == "right") {
-      self.snakeBody.push(
-        {row: head.row, cell: head.cell + 1}
-      );
+      new_head = {
+        row: old_head.row,
+        cell: old_head.cell + 1,
+        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
+      };
     }
     if (self.direction() == "left") {
-      self.snakeBody.push(
-        {row: head.row, cell: head.cell - 1}
-      );
+      new_head = {
+        row: old_head.row,
+        cell: old_head.cell - 1,
+        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
+      };
     }
     if (self.direction() == "down") {
-      self.snakeBody.push(
-        {row: head.row + 1, cell: head.cell}
-      );
+      new_head = {
+        row: old_head.row + 1,
+        cell: old_head.cell,
+        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
+      };
     }
     if (self.direction() == "up") {
-      self.snakeBody.push(
-        {row: head.row - 1, cell: head.cell}
-      );
+      new_head = {
+        row: old_head.row - 1,
+        cell: old_head.cell,
+        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
+      };
     }
+    self.snakeBody.push(new_head);
+    $(new_head.getCellIdSelector()).toggleClass("snakeCell");
+    $(old_tail.getCellIdSelector()).toggleClass("snakeCell");
   };
   self.handleArrowEvent = function(data, event){
     if (event.target.className == "right" || event.key == "ArrowRight"){
@@ -84,3 +94,4 @@ $(window).resize(function() {
 $(document).keydown(function(event){
   appViewModel.handleArrowEvent(undefined, event);
 });
+appViewModel.drawSnake();
