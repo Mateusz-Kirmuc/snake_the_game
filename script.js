@@ -60,12 +60,27 @@ var AppViewModel = function() {
     }
   };
   self.handleArrowEvent = function(data, event){
-    self.direction(event.target.className);
+    if (event.target.className == "right" || event.key == "ArrowRight"){
+      self.direction("right");
+    }
+    if (event.target.className == "left" || event.key == "ArrowLeft"){
+      self.direction("left");
+    }
+    if (event.target.className == "down" || event.key == "ArrowDown"){
+      self.direction("down");
+    }
+    if (event.target.className == "up" || event.key == "ArrowUp"){
+      self.direction("up");
+    }
     self.moveSnake();
-  }
+  };
 };
 var appViewModel = new AppViewModel();
 ko.applyBindings(appViewModel);
 $(window).resize(function() {
   appViewModel.screenWidth($(window).width());
+});
+
+$(document).keydown(function(event){
+  appViewModel.handleArrowEvent(undefined, event);
 });
