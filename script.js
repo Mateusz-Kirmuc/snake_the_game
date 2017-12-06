@@ -1,14 +1,13 @@
-/*jshint esversion: 6 */
 
 var SnakeCell = function(row, cell) {
   this.row = row;
   this.cell = cell;
 };
-SnakeCell.prototype.getCellIdSelector = function(){
-  return `#${this.row}_${this.cell}`;
+SnakeCell.prototype.getBoardCellIdSelector = function(){
+  return "#" + this.row + "_" + this.cell;
 };
 SnakeCell.prototype.getBoardCellElementObject = function() {
-  return $(this.getCellIdSelector());
+  return $(this.getBoardCellIdSelector());
 };
 
 var AppViewModel = function() {
@@ -42,7 +41,7 @@ var AppViewModel = function() {
   };
   self.drawSnake = function() {
     for (const cell of self.snakeBody()) {
-      $(cell.getCellIdSelector()).toggleClass("snakeCell");
+      cell.getBoardCellElementObject().toggleClass("snakeCell");
     }
   };
   self.moveSnake = function() {
