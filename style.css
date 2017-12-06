@@ -52,6 +52,13 @@ header {
 }
 
 
+/* Snake styling */
+
+.snakeCell {
+  background-color: black;
+}
+
+
 /* Arrows styling */
 
 .arrows-container {

@@ -34,7 +34,9 @@
     <div class="board" data-bind="foreach: _.range(numberOfRows())">
         <div class="row" data-bind="foreach: _.range($parent.numberOfCellInRow())">
           <div class="cell"
-          data-bind="attr: {id: $parentContext.$index() + '_' + $index()}, style: {width: $root.cellSize(), height:$root.cellSize()}">
+          data-bind="attr: {id: $parentContext.$index() + '_' + $index()},
+          style: {width: $root.cellSize(), height:$root.cellSize()},
+          css: {snakeCell: $root.isInSnakeBody($parentContext.$index(), $index())}">
           </div>
         </div>
     </div>
