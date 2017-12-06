@@ -39,32 +39,33 @@ var AppViewModel = function() {
     self.snakeBody.shift();
     var head = _.last(self.snakeBody());
     if (self.direction() == "right") {
-      self.snakeBody().push(
+      self.snakeBody.push(
         {row: head.row, cell: head.cell + 1}
       );
     }
     if (self.direction() == "left") {
-      self.snakeBody().push(
+      self.snakeBody.push(
         {row: head.row, cell: head.cell - 1}
       );
     }
     if (self.direction() == "down") {
-      self.snakeBody().push(
+      self.snakeBody.push(
         {row: head.row + 1, cell: head.cell}
       );
     }
     if (self.direction() == "up") {
-      self.snakeBody().push(
+      self.snakeBody.push(
         {row: head.row - 1, cell: head.cell}
       );
     }
   };
+  self.handleArrowEvent = function(data, event){
+    self.direction(event.target.className);
+    self.moveSnake();
+  }
 };
 var appViewModel = new AppViewModel();
 ko.applyBindings(appViewModel);
 $(window).resize(function() {
   appViewModel.screenWidth($(window).width());
 });
-appViewModel.moveSnake();
-appViewModel.moveSnake();
-appViewModel.moveSnake();

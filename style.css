@@ -101,13 +101,13 @@ header {
   width: 100%;
 }
 
-.top, .right, .down, .left {
+.up, .right, .down, .left {
   height: 100%;
   width: 30%;
   border: solid;
 }
 
-.top {
+.up {
   border-width: 10px 0 0 10px;
 }
 
@@ -115,11 +115,11 @@ header {
   border-width: 10px 10px 0 0;
 }
 
-.left {
+.down {
   border-width: 0 10px 10px 0;
 }
 
-.down {
+.left {
   border-width: 0 0 10px 10px;
 }
 
