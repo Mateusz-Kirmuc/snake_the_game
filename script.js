@@ -45,9 +45,9 @@ var AppViewModel = function() {
     }
   };
   self.moveSnake = function() {
-    const old_tail = self.snakeBody.shift();
-    const old_head = _.last(self.snakeBody());
-    let new_head;
+    var old_tail = self.snakeBody.shift();
+    var old_head = _.last(self.snakeBody());
+    var new_head;
     if (self.direction() == "right") {
       new_head = new SnakeCell(old_head.row, old_head.cell + 1);
     }
