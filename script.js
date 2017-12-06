@@ -7,6 +7,9 @@ var SnakeCell = function(row, cell) {
 SnakeCell.prototype.getCellIdSelector = function(){
   return `#${this.row}_${this.cell}`;
 };
+SnakeCell.prototype.getBoardCellElementObject = function() {
+  return $(this.getCellIdSelector());
+};
 
 var AppViewModel = function() {
   var self = this;
@@ -59,8 +62,8 @@ var AppViewModel = function() {
       new_head = new SnakeCell(old_head.row - 1, old_head.cell);
     }
     self.snakeBody.push(new_head);
-    $(new_head.getCellIdSelector()).toggleClass("snakeCell");
-    $(old_tail.getCellIdSelector()).toggleClass("snakeCell");
+    new_head.getBoardCellElementObject().toggleClass("snakeCell");
+    old_tail.getBoardCellElementObject().toggleClass("snakeCell");
   };
   self.handleArrowEvent = function(data, event){
     if (event.target.className == "right" || event.key == "ArrowRight"){
