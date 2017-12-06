@@ -1,4 +1,13 @@
 /*jshint esversion: 6 */
+
+var SnakeCell = function(row, cell) {
+  this.row = row;
+  this.cell = cell;
+};
+SnakeCell.prototype.getCellIdSelector = function(){
+  return `#${this.row}_${this.cell}`;
+};
+
 var AppViewModel = function() {
   var self = this;
   self.numberOfRows = ko.observable(30);
@@ -9,12 +18,12 @@ var AppViewModel = function() {
   self.screenWidth = ko.observable($(window).width());
   self.direction = ko.observable("down");
   self.snakeBody = ko.observableArray([
-    {row: 0, cell: 0, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
-    {row: 0, cell: 1, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
-    {row: 0, cell: 2, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
-    {row: 0, cell: 3, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
-    {row: 0, cell: 4, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}},
-    {row: 0, cell: 5, getCellIdSelector: function() {return `#${this.row}_${this.cell}`}}
+    new SnakeCell(0,0),
+    new SnakeCell(0,1),
+    new SnakeCell(0,2),
+    new SnakeCell(0,3),
+    new SnakeCell(0,4),
+    new SnakeCell(0,5)
   ]);
 
   self.changeBoardSize = function() {
@@ -38,32 +47,16 @@ var AppViewModel = function() {
     const old_head = _.last(self.snakeBody());
     let new_head;
     if (self.direction() == "right") {
-      new_head = {
-        row: old_head.row,
-        cell: old_head.cell + 1,
-        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
-      };
+      new_head = new SnakeCell(old_head.row, old_head.cell + 1);
     }
     if (self.direction() == "left") {
-      new_head = {
-        row: old_head.row,
-        cell: old_head.cell - 1,
-        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
-      };
+      new_head = new SnakeCell(old_head.row, old_head.cell - 1);
     }
     if (self.direction() == "down") {
-      new_head = {
-        row: old_head.row + 1,
-        cell: old_head.cell,
-        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
-      };
+      new_head = new SnakeCell(old_head.row + 1, old_head.cell);
     }
     if (self.direction() == "up") {
-      new_head = {
-        row: old_head.row - 1,
-        cell: old_head.cell,
-        getCellIdSelector: function() {return `#${this.row}_${this.cell}`}
-      };
+      new_head = new SnakeCell(old_head.row - 1, old_head.cell);
     }
     self.snakeBody.push(new_head);
     $(new_head.getCellIdSelector()).toggleClass("snakeCell");
