@@ -109,3 +109,14 @@ $(document).keydown(function(event){
 });
 
 appViewModel.drawSnake();
+
+/*
+  Method implements independent snake movement, once every {milisec} interval.   
+*/
+var startSnakeMoveInterval = function(milisec) {
+  return setInterval(function(){
+    appViewModel.moveSnake();
+  }, milisec);
+};
+
+var interval = startIntervalSnakeMove(500);
