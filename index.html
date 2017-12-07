@@ -31,13 +31,18 @@
       </select>
       <button class="reset-button" type="button">Reset</button>
     </div>
-    <div class="board" data-bind="foreach: _.range(numberOfRows())">
+    <div class="board-container">
+      <div class="gameover-box">
+        <div class="gameover-message">GAME OVER</div>
+      </div>
+      <div class="board" data-bind="foreach: _.range(numberOfRows())">
         <div class="row" data-bind="foreach: _.range($parent.numberOfCellInRow())">
           <div class="cell"
           data-bind="attr: {id: $parentContext.$index() + '_' + $index()},
           style: {width: $root.cellSize(), height:$root.cellSize()}">
           </div>
         </div>
+      </div>
     </div>
     <div class="arrows-container">
       <div class="arrows">

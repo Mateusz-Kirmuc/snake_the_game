@@ -19,9 +19,9 @@ SnakeCell.prototype.isInsideTheBoard = function() {
     this.row > appViewModel.numberOfRows() - 1 ||
     this.cell < 0 ||
     this.cell > appViewModel.numberOfCellInRow() - 1){
-      return true;
+      return false;
   }
-  return false;
+  return true;
 };
 
 var AppViewModel = function() {
@@ -59,7 +59,6 @@ var AppViewModel = function() {
     }
   };
   self.moveSnake = function() {
-    var old_tail = self.snakeBody.shift();
     var old_head = _.last(self.snakeBody());
     var new_head;
     if (self.direction() == "right") {
@@ -74,10 +73,15 @@ var AppViewModel = function() {
     if (self.direction() == "up") {
       new_head = new SnakeCell(old_head.row - 1, old_head.cell);
     }
-    new_head.isInsideTheBoard();
-    self.snakeBody.push(new_head);
-    new_head.getBoardCellElementObject().toggleClass("snakeCell");
-    old_tail.getBoardCellElementObject().toggleClass("snakeCell");
+    if(new_head.isInsideTheBoard()) {
+      var old_tail = self.snakeBody.shift();
+      self.snakeBody.push(new_head);
+      new_head.getBoardCellElementObject().toggleClass("snakeCell");
+      old_tail.getBoardCellElementObject().toggleClass("snakeCell");
+    }
+    else {
+      stopSnakeMoveInterval(interval);
+    }
   };
   self.handleArrowEvent = function(data, event){
     if (event.target.className == "right" || event.key == "ArrowRight"){
