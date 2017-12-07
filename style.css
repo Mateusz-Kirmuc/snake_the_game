@@ -64,9 +64,7 @@ header {
   height: 50%;
   width: 100%;
   top: 25%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -80,6 +78,12 @@ header {
   text-align: center;
   vertical-align: middle;
   font-size: 24px;
+}
+
+.show-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 

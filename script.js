@@ -80,6 +80,7 @@ var AppViewModel = function() {
       old_tail.getBoardCellElementObject().toggleClass("snakeCell");
     }
     else {
+      $(".gameover-box").addClass("show-box");
       stopSnakeMoveInterval(interval);
     }
   };
