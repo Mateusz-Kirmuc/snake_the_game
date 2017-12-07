@@ -86,6 +86,9 @@ var AppViewModel = function() {
     }
   };
   self.handleArrowEvent = function(data, event){
+    // when game is over dont handle any arrow event
+    if (!self.onPlay()) {return;}
+    
     if (event.target.className == "right" || event.key == "ArrowRight"){
       self.direction("right");
     }
