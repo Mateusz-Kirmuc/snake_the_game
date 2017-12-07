@@ -9,6 +9,20 @@ SnakeCell.prototype.getBoardCellIdSelector = function(){
 SnakeCell.prototype.getBoardCellElementObject = function() {
   return $(this.getBoardCellIdSelector());
 };
+/*
+  Method returns true when coordinates (row and cell number) of this SnakeCell
+  instance confirms that it is inside the board.
+  Otherwise, method returns false.
+*/
+SnakeCell.prototype.isInsideTheBoard = function() {
+  if (this.row < 0 ||
+    this.row > appViewModel.numberOfRows() - 1 ||
+    this.cell < 0 ||
+    this.cell > appViewModel.numberOfCellInRow() - 1){
+      return true;
+  }
+  return false;
+};
 
 var AppViewModel = function() {
   var self = this;
@@ -60,6 +74,7 @@ var AppViewModel = function() {
     if (self.direction() == "up") {
       new_head = new SnakeCell(old_head.row - 1, old_head.cell);
     }
+    new_head.isInsideTheBoard();
     self.snakeBody.push(new_head);
     new_head.getBoardCellElementObject().toggleClass("snakeCell");
     old_tail.getBoardCellElementObject().toggleClass("snakeCell");
@@ -80,8 +95,11 @@ var AppViewModel = function() {
     self.moveSnake();
   };
 };
+
 var appViewModel = new AppViewModel();
+
 ko.applyBindings(appViewModel);
+
 $(window).resize(function() {
   appViewModel.screenWidth($(window).width());
 });
@@ -89,4 +107,5 @@ $(window).resize(function() {
 $(document).keydown(function(event){
   appViewModel.handleArrowEvent(undefined, event);
 });
+
 appViewModel.drawSnake();
