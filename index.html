@@ -32,7 +32,7 @@
       <button class="reset-button" type="button">Reset</button>
     </div>
     <div class="board-container">
-      <div class="gameover-box">
+      <div class="gameover-box" data-bind="css: {'show-box': !onPlay()}">
         <div class="gameover-message">GAME OVER</div>
       </div>
       <div class="board" data-bind="foreach: _.range(numberOfRows())">

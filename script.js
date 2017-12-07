@@ -26,6 +26,7 @@ SnakeCell.prototype.isInsideTheBoard = function() {
 
 var AppViewModel = function() {
   var self = this;
+  self.onPlay=ko.observable(true);
   self.numberOfRows = ko.observable(30);
   self.numberOfCellInRow = ko.observable(30);
   self.cellSize = ko.observable("10px");
@@ -80,7 +81,7 @@ var AppViewModel = function() {
       old_tail.getBoardCellElementObject().toggleClass("snakeCell");
     }
     else {
-      $(".gameover-box").addClass("show-box");
+      self.onPlay(false);
       stopSnakeMoveInterval(interval);
     }
   };
