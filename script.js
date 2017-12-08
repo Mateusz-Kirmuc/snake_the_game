@@ -88,7 +88,7 @@ var AppViewModel = function() {
   self.handleArrowEvent = function(data, event){
     // when game is over dont handle any arrow event
     if (!self.onPlay()) {return;}
-    
+
     if (event.target.className == "right" || event.key == "ArrowRight"){
       self.direction("right");
     }
@@ -120,7 +120,7 @@ $(document).keydown(function(event){
 appViewModel.drawSnake();
 
 /*
-  Method implements independent snake movement, once every {milisec}
+  Function implements independent snake movement, once every {milisec}
   miliseconds.
 */
 var startSnakeMoveInterval = function(milisec) {

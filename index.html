@@ -25,9 +25,9 @@
       <select class="size-select"
       data-bind="value: selectedBoardSize, event: {change: changeBoardSize}">
         <option selected>Choose board size</option>
-        <option>small</option>
-        <option data-bind="enable: screenWidth() > 768">medium</option>
-        <option data-bind="enable: screenWidth() > 992">large</option>
+        <option data-bind="enable: !onPlay()">small</option>
+        <option data-bind="enable: !onPlay() && screenWidth() > 768">medium</option>
+        <option data-bind="enable: !onPlay() && screenWidth() > 992">large</option>
       </select>
       <button class="reset-button" type="button">Reset</button>
     </div>
