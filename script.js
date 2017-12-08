@@ -94,13 +94,10 @@ var AppViewModel = function() {
     if (self.direction() == "up") {
       new_head = new VisibleBoardCell(old_head.row - 1, old_head.cell);
     }
-    if(new_head.isOutsideTheBoard()) {
-      self.handleGameOver();
-      return;
-    }
-    if(new_head.isInsideTheBody(this.snakeBody())){
-      self.handleGameOver();
-      return;
+    if(new_head.isOutsideTheBoard() ||
+       new_head.isInsideTheBody(this.snakeBody())) {
+        self.handleGameOver();
+        return;
     }
     if (new_head.row == self.item().row && new_head.cell == self.item().cell){
       self.replaceSnakeHead(new_head);
