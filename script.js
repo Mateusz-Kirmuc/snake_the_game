@@ -19,11 +19,23 @@ SnakeCell.prototype.isOutsideTheBoard = function() {
     this.row > appViewModel.numberOfRows() - 1 ||
     this.cell < 0 ||
     this.cell > appViewModel.numberOfCellInRow() - 1){
-      return false;
+      return true;
   }
-  return true;
+  return false;
 };
 
+/*
+  Method returns true, when object with indentical row/cell coordinates to new
+  SnakeCell instance already exists in snake bodyList.
+*/
+SnakeCell.prototype.isInsideTheBody = function(bodyList) {
+  for (var cell of bodyList) {
+    if (this.row == cell.row && this.cell == cell.cell) {
+      return true;
+    }
+  }
+  return false;
+};
 var AppViewModel = function() {
   var self = this;
   self.onPlay=ko.observable(false);
@@ -80,17 +92,15 @@ var AppViewModel = function() {
     if(new_head.isOutsideTheBoard()) {
       self.handleGameOver();
     }
+    if(new_head.isInsideTheBody(this.snakeBody())){
+      self.handleGameOver();
+    }
     var old_tail = self.snakeBody.shift();
     self.snakeBody.push(new_head);
     new_head.getBoardCellElementObject().toggleClass("snakeCell");
     old_tail.getBoardCellElementObject().toggleClass("snakeCell");
   };
 
-  self.handleGameOver = function() {
-    self.onPlay(false);
-    self.message("Game Over! Hit 'Start Game' button to start again!");
-    stopSnakeMoveInterval(interval);
-  }
 
   self.handleArrowEvent = function(data, event){
     // when game is over dont handle any arrow event
@@ -114,7 +124,12 @@ var AppViewModel = function() {
   self.handleStartGame = function(){
     self.onPlay(true);
     self.drawSnake();
-    var interval = startSnakeMoveInterval(500);
+    self.interval = startSnakeMoveInterval(500);
+  };
+  self.handleGameOver = function() {
+    self.onPlay(false);
+    self.message("Game Over! Hit 'Start Game' button to start again!");
+    stopSnakeMoveInterval(self.interval);
   };
 };
 
