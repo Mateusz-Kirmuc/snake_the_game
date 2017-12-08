@@ -108,12 +108,10 @@ var AppViewModel = function() {
         self.handleGameOver();
         return;
     }
-    if (new_head.overlapsWith(self.item())){
-      self.replaceSnakeHead(new_head);
-      return;
+    if (!new_head.overlapsWith(self.item())){
+      self.removeSnakeTail();
     }
     self.replaceSnakeHead(new_head);
-    self.removeSnakeTail();
   };
 
   self.removeSnakeTail = function(){
