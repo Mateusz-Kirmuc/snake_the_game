@@ -39,7 +39,7 @@ VisibleBoardCell.prototype.isInsideTheBody = function(bodyList) {
 var AppViewModel = function() {
   var self = this;
   self.onPlay=ko.observable(false);
-  self.message=ko.observable("Hit 'Start Game' button to start!")
+  self.message=ko.observable("Hit 'Start Game' button to start!");
   self.numberOfRows = ko.observable(30);
   self.numberOfCellInRow = ko.observable(30);
   self.cellSize = ko.observable("10px");
@@ -102,12 +102,23 @@ var AppViewModel = function() {
       self.handleGameOver();
       return;
     }
+    if (new_head.row == self.item().row && new_head.cell == self.item().cell){
+      self.replaceSnakeHead(new_head);
+      return;
+    }
+    self.replaceSnakeHead(new_head);
+    self.removeSnakeTail();
+  };
+
+  self.removeSnakeTail = function(){
     var old_tail = self.snakeBody.shift();
-    self.snakeBody.push(new_head);
-    new_head.getBoardCellElementObject().toggleClass("visible-cell");
     old_tail.getBoardCellElementObject().toggleClass("visible-cell");
   };
 
+  self.replaceSnakeHead = function(new_head){
+    self.snakeBody.push(new_head);
+    new_head.getBoardCellElementObject().toggleClass("visible-cell");
+  };
 
   self.handleArrowEvent = function(data, event){
     // when game is over dont handle any arrow event
