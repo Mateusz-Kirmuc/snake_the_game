@@ -29,11 +29,11 @@
         <option data-bind="enable: !onPlay() && screenWidth() > 768">medium</option>
         <option data-bind="enable: !onPlay() && screenWidth() > 992">large</option>
       </select>
-      <button class="reset-button" type="button">Reset</button>
+      <button data-bind="click: handleStartGame">Start Game</button>
     </div>
     <div class="board-container">
       <div class="gameover-box" data-bind="css: {'show-box': !onPlay()}">
-        <div class="gameover-message">GAME OVER</div>
+        <div class="gameover-message" data-bind="text: message"></div>
       </div>
       <div class="board" data-bind="foreach: _.range(numberOfRows())">
         <div class="row" data-bind="foreach: _.range($parent.numberOfCellInRow())">

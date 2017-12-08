@@ -26,7 +26,8 @@ SnakeCell.prototype.isInsideTheBoard = function() {
 
 var AppViewModel = function() {
   var self = this;
-  self.onPlay=ko.observable(true);
+  self.onPlay=ko.observable(false);
+  self.message=ko.observable("Hit 'Start Game' button to start!")
   self.numberOfRows = ko.observable(30);
   self.numberOfCellInRow = ko.observable(30);
   self.cellSize = ko.observable("10px");
@@ -54,11 +55,13 @@ var AppViewModel = function() {
       self.numberOfCellInRow(90);
     }
   };
+
   self.drawSnake = function() {
     for (const cell of self.snakeBody()) {
       cell.getBoardCellElementObject().toggleClass("snakeCell");
     }
   };
+
   self.moveSnake = function() {
     var old_head = _.last(self.snakeBody());
     var new_head;
@@ -81,10 +84,16 @@ var AppViewModel = function() {
       old_tail.getBoardCellElementObject().toggleClass("snakeCell");
     }
     else {
-      self.onPlay(false);
-      stopSnakeMoveInterval(interval);
+      self.handleGameOver();
     }
   };
+
+  self.handleGameOver = function() {
+    self.onPlay(false);
+    self.message("Game Over! Hit 'Start Game' button to start again!");
+    stopSnakeMoveInterval(interval);
+  }
+
   self.handleArrowEvent = function(data, event){
     // when game is over dont handle any arrow event
     if (!self.onPlay()) {return;}
@@ -103,6 +112,12 @@ var AppViewModel = function() {
     }
     self.moveSnake();
   };
+
+  self.handleStartGame = function(){
+    self.onPlay(true);
+    self.drawSnake();
+    var interval = startSnakeMoveInterval(500);
+  };
 };
 
 var appViewModel = new AppViewModel();
@@ -117,8 +132,6 @@ $(document).keydown(function(event){
   appViewModel.handleArrowEvent(undefined, event);
 });
 
-appViewModel.drawSnake();
-
 /*
   Function implements independent snake movement, once every {milisec}
   miliseconds.
@@ -132,5 +145,3 @@ var startSnakeMoveInterval = function(milisec) {
 var stopSnakeMoveInterval = function(intervalObject) {
   clearInterval(intervalObject);
 };
-
-var interval = startSnakeMoveInterval(500);
