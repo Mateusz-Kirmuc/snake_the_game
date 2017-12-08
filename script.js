@@ -14,7 +14,7 @@ SnakeCell.prototype.getBoardCellElementObject = function() {
   instance confirms that it is inside the board.
   Otherwise, method returns false.
 */
-SnakeCell.prototype.isInsideTheBoard = function() {
+SnakeCell.prototype.isOutsideTheBoard = function() {
   if (this.row < 0 ||
     this.row > appViewModel.numberOfRows() - 1 ||
     this.cell < 0 ||
@@ -77,15 +77,13 @@ var AppViewModel = function() {
     if (self.direction() == "up") {
       new_head = new SnakeCell(old_head.row - 1, old_head.cell);
     }
-    if(new_head.isInsideTheBoard()) {
-      var old_tail = self.snakeBody.shift();
-      self.snakeBody.push(new_head);
-      new_head.getBoardCellElementObject().toggleClass("snakeCell");
-      old_tail.getBoardCellElementObject().toggleClass("snakeCell");
-    }
-    else {
+    if(new_head.isOutsideTheBoard()) {
       self.handleGameOver();
     }
+    var old_tail = self.snakeBody.shift();
+    self.snakeBody.push(new_head);
+    new_head.getBoardCellElementObject().toggleClass("snakeCell");
+    old_tail.getBoardCellElementObject().toggleClass("snakeCell");
   };
 
   self.handleGameOver = function() {
