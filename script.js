@@ -45,6 +45,11 @@ VisibleBoardCell.prototype.isInsideTheBody = function(bodyList) {
   }
   return false;
 };
+
+VisibleBoardCell.prototype.showOnBoard = function() {
+  this.getBoardCellElementObject().addClass("visible-cell");
+};
+
 var AppViewModel = function() {
   var self = this;
   self.onPlay=ko.observable(false);
@@ -121,7 +126,7 @@ var AppViewModel = function() {
 
   self.replaceSnakeHead = function(new_head){
     self.snakeBody.push(new_head);
-    new_head.getBoardCellElementObject().addClass("visible-cell");
+    new_head.showOnBoard();
   };
 
   self.handleArrowEvent = function(data, event){
@@ -146,7 +151,7 @@ var AppViewModel = function() {
   self.handleStartGame = function(){
     self.onPlay(true);
     self.drawSnake();
-    self.drawItem();
+    self.item().showOnBoard();
     self.interval = startSnakeMoveInterval(500);
   };
   self.handleGameOver = function() {
