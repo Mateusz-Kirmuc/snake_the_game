@@ -47,6 +47,7 @@ var AppViewModel = function() {
   self.selectedBoardSize = ko.observable();
   self.screenWidth = ko.observable($(window).width());
   self.direction = ko.observable("down");
+  self.item = ko.observable(new SnakeCell(10,10));
   self.snakeBody = ko.observableArray([
     new SnakeCell(0,0),
     new SnakeCell(0,1),
@@ -72,6 +73,10 @@ var AppViewModel = function() {
     for (const cell of self.snakeBody()) {
       cell.getBoardCellElementObject().toggleClass("snakeCell");
     }
+  };
+
+  self.drawItem = function() {
+    self.item().getBoardCellElementObject().toggleClass("snakeCell");
   };
 
   self.moveSnake = function() {
@@ -126,6 +131,7 @@ var AppViewModel = function() {
   self.handleStartGame = function(){
     self.onPlay(true);
     self.drawSnake();
+    self.drawItem();
     self.interval = startSnakeMoveInterval(500);
   };
   self.handleGameOver = function() {
