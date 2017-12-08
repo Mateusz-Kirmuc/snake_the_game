@@ -23,6 +23,15 @@ VisibleBoardCell.prototype.isOutsideTheBoard = function() {
   }
   return false;
 };
+/* Method returns true when this visible board cell overlaps with other visible
+  board cell.
+ */
+VisibleBoardCell.prototype.overlapsWith = function(board_cell) {
+  if (this.row == board_cell.row && this.cell == board_cell.cell) {
+    return true;
+  }
+  return false;
+};
 
 /*
   Method returns true, when object with indentical row/cell coordinates to new
@@ -99,7 +108,7 @@ var AppViewModel = function() {
         self.handleGameOver();
         return;
     }
-    if (new_head.row == self.item().row && new_head.cell == self.item().cell){
+    if (new_head.overlapsWith(self.item())){
       self.replaceSnakeHead(new_head);
       return;
     }
