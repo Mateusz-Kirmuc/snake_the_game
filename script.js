@@ -91,9 +91,11 @@ var AppViewModel = function() {
     }
     if(new_head.isOutsideTheBoard()) {
       self.handleGameOver();
+      return;
     }
     if(new_head.isInsideTheBody(this.snakeBody())){
       self.handleGameOver();
+      return;
     }
     var old_tail = self.snakeBody.shift();
     self.snakeBody.push(new_head);
