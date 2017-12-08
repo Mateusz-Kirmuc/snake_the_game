@@ -1,20 +1,20 @@
 
-var SnakeCell = function(row, cell) {
+var VisibleBoardCell = function(row, cell) {
   this.row = row;
   this.cell = cell;
 };
-SnakeCell.prototype.getBoardCellIdSelector = function(){
+VisibleBoardCell.prototype.getBoardCellIdSelector = function(){
   return "#" + this.row + "_" + this.cell;
 };
-SnakeCell.prototype.getBoardCellElementObject = function() {
+VisibleBoardCell.prototype.getBoardCellElementObject = function() {
   return $(this.getBoardCellIdSelector());
 };
 /*
-  Method returns true when coordinates (row and cell number) of this SnakeCell
+  Method returns true when coordinates (row and cell number) of this VisibleBoardCell
   instance confirms that it is inside the board.
   Otherwise, method returns false.
 */
-SnakeCell.prototype.isOutsideTheBoard = function() {
+VisibleBoardCell.prototype.isOutsideTheBoard = function() {
   if (this.row < 0 ||
     this.row > appViewModel.numberOfRows() - 1 ||
     this.cell < 0 ||
@@ -26,9 +26,9 @@ SnakeCell.prototype.isOutsideTheBoard = function() {
 
 /*
   Method returns true, when object with indentical row/cell coordinates to new
-  SnakeCell instance already exists in snake bodyList.
+  VisibleBoardCell instance already exists in snake bodyList.
 */
-SnakeCell.prototype.isInsideTheBody = function(bodyList) {
+VisibleBoardCell.prototype.isInsideTheBody = function(bodyList) {
   for (var cell of bodyList) {
     if (this.row == cell.row && this.cell == cell.cell) {
       return true;
@@ -47,14 +47,14 @@ var AppViewModel = function() {
   self.selectedBoardSize = ko.observable();
   self.screenWidth = ko.observable($(window).width());
   self.direction = ko.observable("down");
-  self.item = ko.observable(new SnakeCell(10,10));
+  self.item = ko.observable(new VisibleBoardCell(10,10));
   self.snakeBody = ko.observableArray([
-    new SnakeCell(0,0),
-    new SnakeCell(0,1),
-    new SnakeCell(0,2),
-    new SnakeCell(0,3),
-    new SnakeCell(0,4),
-    new SnakeCell(0,5)
+    new VisibleBoardCell(0,0),
+    new VisibleBoardCell(0,1),
+    new VisibleBoardCell(0,2),
+    new VisibleBoardCell(0,3),
+    new VisibleBoardCell(0,4),
+    new VisibleBoardCell(0,5)
   ]);
 
   self.changeBoardSize = function() {
@@ -71,28 +71,28 @@ var AppViewModel = function() {
 
   self.drawSnake = function() {
     for (const cell of self.snakeBody()) {
-      cell.getBoardCellElementObject().toggleClass("snakeCell");
+      cell.getBoardCellElementObject().toggleClass("VisibleBoardCell");
     }
   };
 
   self.drawItem = function() {
-    self.item().getBoardCellElementObject().toggleClass("snakeCell");
+    self.item().getBoardCellElementObject().toggleClass("VisibleBoardCell");
   };
 
   self.moveSnake = function() {
     var old_head = _.last(self.snakeBody());
     var new_head;
     if (self.direction() == "right") {
-      new_head = new SnakeCell(old_head.row, old_head.cell + 1);
+      new_head = new VisibleBoardCell(old_head.row, old_head.cell + 1);
     }
     if (self.direction() == "left") {
-      new_head = new SnakeCell(old_head.row, old_head.cell - 1);
+      new_head = new VisibleBoardCell(old_head.row, old_head.cell - 1);
     }
     if (self.direction() == "down") {
-      new_head = new SnakeCell(old_head.row + 1, old_head.cell);
+      new_head = new VisibleBoardCell(old_head.row + 1, old_head.cell);
     }
     if (self.direction() == "up") {
-      new_head = new SnakeCell(old_head.row - 1, old_head.cell);
+      new_head = new VisibleBoardCell(old_head.row - 1, old_head.cell);
     }
     if(new_head.isOutsideTheBoard()) {
       self.handleGameOver();
@@ -104,8 +104,8 @@ var AppViewModel = function() {
     }
     var old_tail = self.snakeBody.shift();
     self.snakeBody.push(new_head);
-    new_head.getBoardCellElementObject().toggleClass("snakeCell");
-    old_tail.getBoardCellElementObject().toggleClass("snakeCell");
+    new_head.getBoardCellElementObject().toggleClass("VisibleBoardCell");
+    old_tail.getBoardCellElementObject().toggleClass("VisibleBoardCell");
   };
 
 

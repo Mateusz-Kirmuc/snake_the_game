@@ -89,7 +89,7 @@ header {
 
 /* Snake styling */
 
-.snakeCell {
+.VisibleBoardCell {
   background-color: black;
 }
 
