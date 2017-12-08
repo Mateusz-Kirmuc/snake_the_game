@@ -50,6 +50,10 @@ VisibleBoardCell.prototype.showOnBoard = function() {
   this.getBoardCellElementObject().addClass("visible-cell");
 };
 
+VisibleBoardCell.prototype.removeFromBoard = function() {
+  this.getBoardCellElementObject().removeClass("visible-cell");
+};
+
 var AppViewModel = function() {
   var self = this;
   self.onPlay=ko.observable(false);
@@ -85,12 +89,8 @@ var AppViewModel = function() {
 
   self.drawSnake = function() {
     for (const cell of self.snakeBody()) {
-      cell.getBoardCellElementObject().toggleClass("visible-cell");
+      cell.showOnBoard();
     }
-  };
-
-  self.drawItem = function() {
-    self.item().getBoardCellElementObject().toggleClass("visible-cell");
   };
 
   self.moveSnake = function() {
@@ -121,7 +121,7 @@ var AppViewModel = function() {
 
   self.removeSnakeTail = function(){
     var old_tail = self.snakeBody.shift();
-    old_tail.getBoardCellElementObject().toggleClass("visible-cell");
+    old_tail.removeFromBoard();
   };
 
   self.replaceSnakeHead = function(new_head){
