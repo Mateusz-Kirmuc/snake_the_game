@@ -121,7 +121,7 @@ var AppViewModel = function() {
 
   self.replaceSnakeHead = function(new_head){
     self.snakeBody.push(new_head);
-    new_head.getBoardCellElementObject().toggleClass("visible-cell");
+    new_head.getBoardCellElementObject().addClass("visible-cell");
   };
 
   self.handleArrowEvent = function(data, event){
