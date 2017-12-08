@@ -71,12 +71,12 @@ var AppViewModel = function() {
 
   self.drawSnake = function() {
     for (const cell of self.snakeBody()) {
-      cell.getBoardCellElementObject().toggleClass("VisibleBoardCell");
+      cell.getBoardCellElementObject().toggleClass("visible-cell");
     }
   };
 
   self.drawItem = function() {
-    self.item().getBoardCellElementObject().toggleClass("VisibleBoardCell");
+    self.item().getBoardCellElementObject().toggleClass("visible-cell");
   };
 
   self.moveSnake = function() {
@@ -104,8 +104,8 @@ var AppViewModel = function() {
     }
     var old_tail = self.snakeBody.shift();
     self.snakeBody.push(new_head);
-    new_head.getBoardCellElementObject().toggleClass("VisibleBoardCell");
-    old_tail.getBoardCellElementObject().toggleClass("VisibleBoardCell");
+    new_head.getBoardCellElementObject().toggleClass("visible-cell");
+    old_tail.getBoardCellElementObject().toggleClass("visible-cell");
   };
 
 
