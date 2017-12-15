@@ -59,6 +59,13 @@ Array.prototype.replaceHeadWith = function(new_head) {
   this.push(new_head);
 };
 
+Array.prototype.removeSnake = function() {
+  var snakeBody = this;
+  for (cell of snakeBody) {
+    cell.removeFromBoard();
+  }
+};
+
 var AppViewModel = function() {
   var self = this;
   self.onPlay = ko.observable(false);
