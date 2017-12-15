@@ -1,43 +1,38 @@
-
 var VisibleBoardCell = function(row, cell) {
   this.row = row;
   this.cell = cell;
 };
-VisibleBoardCell.prototype.getBoardCellIdSelector = function(){
+VisibleBoardCell.prototype.getBoardCellIdSelector = function() {
   return "#" + this.row + "_" + this.cell;
 };
 VisibleBoardCell.prototype.getBoardCellElementObject = function() {
   return $(this.getBoardCellIdSelector());
 };
-/*
-  Method returns true when coordinates (row and cell number) of this VisibleBoardCell
-  instance confirms that it is inside the board.
-  Otherwise, method returns false.
-*/
+
 VisibleBoardCell.prototype.isOutsideTheBoard = function() {
+  /* Method returns true when coordinates (row and cell number) of this VisibleBoardCell
+  instance confirms that it is inside the board.
+  Otherwise, method returns false. */
   if (this.row < 0 ||
     this.row > appViewModel.numberOfRows() - 1 ||
     this.cell < 0 ||
-    this.cell > appViewModel.numberOfCellInRow() - 1){
-      return true;
+    this.cell > appViewModel.numberOfCellInRow() - 1) {
+    return true;
   }
   return false;
 };
-/* Method returns true when this visible board cell overlaps with other visible
-  board cell.
- */
 VisibleBoardCell.prototype.overlapsWith = function(board_cell) {
+  /* Method returns true when this visible board cell overlaps with other visible
+  board cell.*/
   if (this.row == board_cell.row && this.cell == board_cell.cell) {
     return true;
   }
   return false;
 };
 
-/*
-  Method returns true, when object with indentical row/cell coordinates to new
-  VisibleBoardCell instance already exists in snake bodyList.
-*/
 VisibleBoardCell.prototype.isInsideTheBody = function(bodyList) {
+  /* Method returns true, when object with indentical row/cell coordinates to new
+  VisibleBoardCell instance already exists in snake bodyList. */
   for (var cell of bodyList) {
     if (this.row == cell.row && this.cell == cell.cell) {
       return true;
@@ -54,10 +49,15 @@ VisibleBoardCell.prototype.removeFromBoard = function() {
   this.getBoardCellElementObject().removeClass("visible-cell");
 };
 
+Array.prototype.removeTail = function() {
+  var tail = this.shift();
+  tail.removeFromBoard();
+};
+
 var AppViewModel = function() {
   var self = this;
-  self.onPlay=ko.observable(false);
-  self.message=ko.observable("Hit 'Start Game' button to start!");
+  self.onPlay = ko.observable(false);
+  self.message = ko.observable("Hit 'Start Game' button to start!");
   self.numberOfRows = ko.observable(30);
   self.numberOfCellInRow = ko.observable(30);
   self.cellSize = ko.observable("10px");
@@ -65,14 +65,14 @@ var AppViewModel = function() {
   self.selectedBoardSize = ko.observable();
   self.screenWidth = ko.observable($(window).width());
   self.direction = ko.observable("down");
-  self.item = ko.observable(new VisibleBoardCell(10,10));
+  self.item = ko.observable(new VisibleBoardCell(10, 10));
   self.snakeBody = ko.observableArray([
-    new VisibleBoardCell(0,0),
-    new VisibleBoardCell(0,1),
-    new VisibleBoardCell(0,2),
-    new VisibleBoardCell(0,3),
-    new VisibleBoardCell(0,4),
-    new VisibleBoardCell(0,5)
+    new VisibleBoardCell(0, 0),
+    new VisibleBoardCell(0, 1),
+    new VisibleBoardCell(0, 2),
+    new VisibleBoardCell(0, 3),
+    new VisibleBoardCell(0, 4),
+    new VisibleBoardCell(0, 5)
   ]);
 
   self.changeBoardSize = function() {
@@ -108,47 +108,49 @@ var AppViewModel = function() {
     if (self.direction() == "up") {
       new_head = new VisibleBoardCell(old_head.row - 1, old_head.cell);
     }
-    if(new_head.isOutsideTheBoard() ||
-       new_head.isInsideTheBody(this.snakeBody())) {
-        self.handleGameOver();
-        return;
+    if (new_head.isOutsideTheBoard() ||
+      new_head.isInsideTheBody(this.snakeBody())) {
+      self.handleGameOver();
+      return;
     }
-    if (!new_head.overlapsWith(self.item())){
+    if (!new_head.overlapsWith(self.item())) {
       self.removeSnakeTail();
     }
     self.replaceSnakeHead(new_head);
   };
 
-  self.removeSnakeTail = function(){
+  self.removeSnakeTail = function() {
     var old_tail = self.snakeBody.shift();
     old_tail.removeFromBoard();
   };
 
-  self.replaceSnakeHead = function(new_head){
+  self.replaceSnakeHead = function(new_head) {
     self.snakeBody.push(new_head);
     new_head.showOnBoard();
   };
 
-  self.handleArrowEvent = function(data, event){
+  self.handleArrowEvent = function(data, event) {
     // when game is over dont handle any arrow event
-    if (!self.onPlay()) {return;}
+    if (!self.onPlay()) {
+      return;
+    }
 
-    if (event.target.className == "right" || event.key == "ArrowRight"){
+    if (event.target.className == "right" || event.key == "ArrowRight") {
       self.direction("right");
     }
-    if (event.target.className == "left" || event.key == "ArrowLeft"){
+    if (event.target.className == "left" || event.key == "ArrowLeft") {
       self.direction("left");
     }
-    if (event.target.className == "down" || event.key == "ArrowDown"){
+    if (event.target.className == "down" || event.key == "ArrowDown") {
       self.direction("down");
     }
-    if (event.target.className == "up" || event.key == "ArrowUp"){
+    if (event.target.className == "up" || event.key == "ArrowUp") {
       self.direction("up");
     }
     self.moveSnake();
   };
 
-  self.handleStartGame = function(){
+  self.handleStartGame = function() {
     self.onPlay(true);
     self.drawSnake();
     self.item().showOnBoard();
@@ -169,7 +171,7 @@ $(window).resize(function() {
   appViewModel.screenWidth($(window).width());
 });
 
-$(document).keydown(function(event){
+$(document).keydown(function(event) {
   appViewModel.handleArrowEvent(undefined, event);
 });
 
@@ -178,7 +180,7 @@ $(document).keydown(function(event){
   miliseconds.
 */
 var startSnakeMoveInterval = function(milisec) {
-  return setInterval(function(){
+  return setInterval(function() {
     appViewModel.moveSnake();
   }, milisec);
 };
