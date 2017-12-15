@@ -18,6 +18,7 @@ VisibleBoardCell.prototype.isOutsideTheBoard = function() {
     this.row > appViewModel.numberOfRows() - 1 ||
     this.cell < 0 ||
     this.cell > appViewModel.numberOfCellInRow() - 1) {
+    console.log("new head is outside the board!");
     return true;
   }
   return false;
@@ -31,11 +32,12 @@ VisibleBoardCell.prototype.overlapsWith = function(board_cell) {
   return false;
 };
 
-VisibleBoardCell.prototype.isInsideTheBody = function(bodyList) {
+VisibleBoardCell.prototype.isInsideTheBodyOf = function(bodyList) {
   /* Method returns true, when object with indentical row/cell coordinates to new
   VisibleBoardCell instance already exists in snake bodyList. */
   for (var cell of bodyList) {
     if (this.row == cell.row && this.cell == cell.cell) {
+      console.log("new head inside snake body!");
       return true;
     }
   }
@@ -118,23 +120,14 @@ var AppViewModel = function() {
       new_head = new VisibleBoardCell(old_head.row - 1, old_head.cell);
     }
     if (new_head.isOutsideTheBoard() ||
-      new_head.isInsideTheBody(this.snake)) {
+      new_head.isInsideTheBodyOf(this.snake)) {
       self.handleGameOver();
       return;
     }
     if (!new_head.overlapsWith(self.item())) {
-      self.removeSnakeTail();
+      self.snake.removeTail();
     }
-    self.replaceSnakeHead(new_head);
-  };
-
-  self.removeSnakeTail = function() {
-    var old_tail = self.snake.shift();
-    old_tail.removeFromBoard();
-  };
-
-  self.replaceSnakeHead = function(new_head) {
-    self.snake.push(new_head);
+    self.snake.replaceHeadWith(new_head);
   };
 
   self.handleArrowEvent = function(data, event) {
@@ -161,10 +154,12 @@ var AppViewModel = function() {
   self.handleStartGame = function() {
     self.onPlay(true);
     self.createSnake();
+    self.direction("right");
     self.interval = startSnakeMoveInterval(500);
   };
   self.handleGameOver = function() {
     self.onPlay(false);
+    self.snake.removeSnake();
     self.message("Game Over! Hit 'Start Game' button to start again!");
     stopSnakeMoveInterval(self.interval);
   };
