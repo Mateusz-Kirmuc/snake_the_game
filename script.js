@@ -57,6 +57,7 @@ Array.prototype.removeTail = function() {
 
 var AppViewModel = function() {
   var self = this;
+  self
   self.onPlay = ko.observable(false);
   self.message = ko.observable("Hit 'Start Game' button to start!");
   self.numberOfRows = ko.observable(30);
@@ -67,14 +68,17 @@ var AppViewModel = function() {
   self.screenWidth = ko.observable($(window).width());
   self.direction = ko.observable("down");
   self.item = ko.observable(new VisibleBoardCell(10, 10));
-  self.snakeBody = ko.observableArray([
-    new VisibleBoardCell(0, 0),
-    new VisibleBoardCell(0, 1),
-    new VisibleBoardCell(0, 2),
-    new VisibleBoardCell(0, 3),
-    new VisibleBoardCell(0, 4),
-    new VisibleBoardCell(0, 5)
-  ]);
+
+  self.createSnake = function() {
+    self.snake = [
+      new VisibleBoardCell(0, 0),
+      new VisibleBoardCell(0, 1),
+      new VisibleBoardCell(0, 2),
+      new VisibleBoardCell(0, 3),
+      new VisibleBoardCell(0, 4),
+      new VisibleBoardCell(0, 5)
+    ];
+  };
 
   self.changeBoardSize = function() {
     if (self.selectedBoardSize() == "small") {
@@ -88,14 +92,8 @@ var AppViewModel = function() {
     }
   };
 
-  self.drawSnake = function() {
-    for (const cell of self.snakeBody()) {
-      cell.showOnBoard();
-    }
-  };
-
   self.moveSnake = function() {
-    var old_head = _.last(self.snakeBody());
+    var old_head = _.last(self.snake);
     var new_head;
     if (self.direction() == "right") {
       new_head = new VisibleBoardCell(old_head.row, old_head.cell + 1);
@@ -110,7 +108,7 @@ var AppViewModel = function() {
       new_head = new VisibleBoardCell(old_head.row - 1, old_head.cell);
     }
     if (new_head.isOutsideTheBoard() ||
-      new_head.isInsideTheBody(this.snakeBody())) {
+      new_head.isInsideTheBody(this.snake)) {
       self.handleGameOver();
       return;
     }
@@ -121,13 +119,12 @@ var AppViewModel = function() {
   };
 
   self.removeSnakeTail = function() {
-    var old_tail = self.snakeBody.shift();
+    var old_tail = self.snake.shift();
     old_tail.removeFromBoard();
   };
 
   self.replaceSnakeHead = function(new_head) {
-    self.snakeBody.push(new_head);
-    new_head.showOnBoard();
+    self.snake.push(new_head);
   };
 
   self.handleArrowEvent = function(data, event) {
@@ -153,8 +150,7 @@ var AppViewModel = function() {
 
   self.handleStartGame = function() {
     self.onPlay(true);
-    self.drawSnake();
-    self.item().showOnBoard();
+    self.createSnake();
     self.interval = startSnakeMoveInterval(500);
   };
   self.handleGameOver = function() {
