@@ -1,6 +1,7 @@
 var VisibleBoardCell = function(row, cell) {
   this.row = row;
   this.cell = cell;
+  this.showOnBoard();
 };
 VisibleBoardCell.prototype.getBoardCellIdSelector = function() {
   return "#" + this.row + "_" + this.cell;
