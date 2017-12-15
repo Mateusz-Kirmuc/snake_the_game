@@ -55,9 +55,12 @@ Array.prototype.removeTail = function() {
   tail.removeFromBoard();
 };
 
+Array.prototype.replaceHeadWith = function(new_head) {
+  this.push(new_head);
+};
+
 var AppViewModel = function() {
   var self = this;
-  self
   self.onPlay = ko.observable(false);
   self.message = ko.observable("Hit 'Start Game' button to start!");
   self.numberOfRows = ko.observable(30);
