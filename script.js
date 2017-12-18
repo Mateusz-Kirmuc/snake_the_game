@@ -139,17 +139,34 @@ var AppViewModel = function() {
     }
 
     if (event.target.className == "right" || event.key == "ArrowRight") {
+      // prevent snake moving backwords
+      if (self.direction() == "left") {
+        return;
+      }
       self.direction("right");
     }
     if (event.target.className == "left" || event.key == "ArrowLeft") {
+      // prevent snake moving backwords
+      if (self.direction() == "right") {
+        return;
+      }
       self.direction("left");
     }
     if (event.target.className == "down" || event.key == "ArrowDown") {
+      // prevent snake moving backwords
+      if (self.direction() == "up") {
+        return;
+      }
       self.direction("down");
     }
     if (event.target.className == "up" || event.key == "ArrowUp") {
+      // prevent snake moving backwords
+      if (self.direction() == "down") {
+        return;
+      }
       self.direction("up");
     }
+
     self.moveSnake();
   };
 
