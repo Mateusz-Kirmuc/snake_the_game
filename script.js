@@ -79,7 +79,7 @@ var AppViewModel = function() {
   self.selectedBoardSize = ko.observable();
   self.screenWidth = ko.observable($(window).width());
   self.direction = ko.observable("down");
-  self.item = ko.observable(new VisibleBoardCell(10, 10));
+
 
   self.createSnake = function() {
     self.snake = [
@@ -124,7 +124,7 @@ var AppViewModel = function() {
       self.handleGameOver();
       return;
     }
-    if (!new_head.overlapsWith(self.item())) {
+    if (!new_head.overlapsWith(self.item)) {
       self.snake.removeTail();
     }
     self.snake.replaceHeadWith(new_head);
@@ -151,10 +151,18 @@ var AppViewModel = function() {
     self.moveSnake();
   };
 
+  self.generateNewItem = function() {
+    var row = _.random(self.numberOfRows());
+    var cell = _.random(self.numberOfCellInRow());
+    return new VisibleBoardCell(row, cell);
+  };
+
+
   self.handleStartGame = function() {
     self.onPlay(true);
     self.createSnake();
     self.direction("right");
+    self.item = self.generateNewItem();
     self.interval = startSnakeMoveInterval(500);
   };
   self.handleGameOver = function() {
