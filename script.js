@@ -168,6 +168,7 @@ var AppViewModel = function() {
   self.handleGameOver = function() {
     self.onPlay(false);
     self.snake.removeSnake();
+    self.item.removeFromBoard();
     self.message("Game Over! Hit 'Start Game' button to start again!");
     stopSnakeMoveInterval(self.interval);
   };
