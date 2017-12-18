@@ -124,7 +124,10 @@ var AppViewModel = function() {
       self.handleGameOver();
       return;
     }
-    if (!new_head.overlapsWith(self.item)) {
+    if (new_head.overlapsWith(self.item)) {
+      self.item = self.generateNewItem();
+      console.log(self.item);
+    } else {
       self.snake.removeTail();
     }
     self.snake.replaceHeadWith(new_head);
@@ -152,9 +155,13 @@ var AppViewModel = function() {
   };
 
   self.generateNewItem = function() {
-    var row = _.random(self.numberOfRows());
-    var cell = _.random(self.numberOfCellInRow());
-    return new VisibleBoardCell(row, cell);
+    var row = _.random(self.numberOfRows() - 1);
+    var cell = _.random(self.numberOfCellInRow() - 1);
+    var new_item = new VisibleBoardCell(row, cell);
+    if (_.findWhere(self.snake, new_item)) {
+      new_item = self.generateNewItem();
+    }
+    return new_item;
   };
 
 
