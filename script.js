@@ -126,7 +126,6 @@ var AppViewModel = function() {
     }
     if (new_head.overlapsWith(self.item)) {
       self.item = self.generateNewItem();
-      console.log(self.item);
     } else {
       self.snake.removeTail();
     }
@@ -166,12 +165,22 @@ var AppViewModel = function() {
 
 
   self.handleStartGame = function() {
+    if (self.onPlay()) {
+      self.handleResetGame();
+    }
     self.onPlay(true);
     self.createSnake();
     self.direction("right");
     self.item = self.generateNewItem();
     self.interval = startSnakeMoveInterval(500);
   };
+
+  self.handleResetGame = function() {
+    self.snake.removeSnake();
+    self.item.removeFromBoard();
+    stopSnakeMoveInterval(self.interval);
+  };
+
   self.handleGameOver = function() {
     self.onPlay(false);
     self.snake.removeSnake();
