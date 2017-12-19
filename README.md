@@ -2,8 +2,7 @@
 The Snake is a classic arcade game adapted in a browser environment.
 
 ## How to install
-To play the game in your own browser, visit the website
-https://mateusz-kirmuc.github.io/snake_the_game/ or download this repository and
+To play the game in your own browser, visit [this website](https://mateusz-kirmuc.github.io/snake_the_game/) or download this repository and
  open the index.html file in your browser.
 
 ## How to play
