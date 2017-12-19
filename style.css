@@ -32,7 +32,8 @@ header {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding-bottom: 10px;
+  margin-bottom: 10px;
+  min-height: 21px;
 }
 
 
@@ -51,6 +52,7 @@ header {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  min-height: 200px;
 }
 
 .board {
@@ -119,6 +121,7 @@ td {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  min-height: 200px;
 }
 
 .arrows {
