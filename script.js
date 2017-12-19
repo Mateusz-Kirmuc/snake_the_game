@@ -73,7 +73,7 @@ var AppViewModel = function() {
   self.onPlay = ko.observable(false);
   self.message = ko.observable("Hit 'Start Game' button to start!");
   self.numberOfRows = ko.observable(20);
-  self.numberOfCellInRow = ko.observable(20);
+  self.numberOfCellInRow = ko.observable(30);
   self.cellSize = ko.observable("10px");
   self.boardSizes = ["small", "medium", "large"];
   self.selectedBoardSize = ko.observable();
@@ -94,13 +94,13 @@ var AppViewModel = function() {
 
   self.changeBoardSize = function() {
     if (self.selectedBoardSize() == "small") {
-      self.numberOfCellInRow(30);
+      self.cellSize("10px");
     }
     if (self.selectedBoardSize() == "medium") {
-      self.numberOfCellInRow(60);
+      self.cellSize("20px");
     }
     if (self.selectedBoardSize() == "large") {
-      self.numberOfCellInRow(90);
+      self.cellSize("25px");
     }
   };
 

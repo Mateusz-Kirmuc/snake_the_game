@@ -38,6 +38,21 @@ header {
 
 /* Board styling */
 
+.board-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
 .board {
   border-collapse: collapse;
   margin: auto;
@@ -156,7 +171,7 @@ td {
 
 /* Medium and large devices */
 
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
   .arrows-container {
     display: none;
   }
