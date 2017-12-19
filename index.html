@@ -1,61 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Snake game</title>
-    <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js">
-    </script>
-    <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js">
-    </script>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.js"
-      integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
-      crossorigin="anonymous"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <header>
-      <h1>Snake The Game</h1>
-    </header>
-    <div class="dashboard">
-      <select class="size-select"
-      data-bind="value: selectedBoardSize, event: {change: changeBoardSize}">
+
+<head>
+  <meta charset="utf-8">
+  <title>Snake game</title>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js">
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js">
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.js" integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
+    crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Snake The Game</h1>
+  </header>
+  <div class="dashboard">
+    <select class="size-select" data-bind="value: selectedBoardSize, event: {change: changeBoardSize}">
         <option selected>Choose board size</option>
         <option data-bind="enable: !onPlay()">small</option>
         <option data-bind="enable: !onPlay() && screenWidth() > 768">medium</option>
         <option data-bind="enable: !onPlay() && screenWidth() > 992">large</option>
       </select>
-      <button data-bind="click: handleStartGame">Start Game</button>
-    </div>
-    <div class="board-container">
-      <div class="gameover-box" data-bind="css: {'show-box': !onPlay()}">
-        <div class="gameover-message" data-bind="text: message"></div>
-      </div>
-      <div class="board" data-bind="foreach: _.range(numberOfRows())">
-        <div class="row" data-bind="foreach: _.range($parent.numberOfCellInRow())">
-          <div class="cell"
-          data-bind="attr: {id: $parentContext.$index() + '_' + $index()},
+    <button data-bind="click: handleStartGame">Start Game</button>
+  </div>
+  <table class="board" data-bind="foreach: _.range(numberOfRows())">
+    <tr class="row" data-bind="foreach: _.range($parent.numberOfCellInRow())">
+      <td>
+        <div class="cell" data-bind="attr: {id: $parentContext.$index() + '_' + $index()},
           style: {width: $root.cellSize(), height:$root.cellSize()}">
-          </div>
         </div>
+      </td>
+    </tr>
+    <div class="gameover-box" data-bind="css: {'show-box': !onPlay()}">
+      <div class="gameover-message" data-bind="text: message"></div>
+    </div>
+  </table>
+  <div class="arrows-container">
+    <div class="arrows">
+      <div class="row-container">
+        <div class="up" data-bind="click: handleArrowEvent"></div>
+        <div class="right" data-bind="click: handleArrowEvent"></div>
+      </div>
+      <div class="row-container">
+        <div class="left" data-bind="click: handleArrowEvent"></div>
+        <div class="down" data-bind="click: handleArrowEvent"></div>
       </div>
     </div>
-    <div class="arrows-container">
-      <div class="arrows">
-        <div class="row-container">
-          <div class="up" data-bind="click: handleArrowEvent"></div>
-          <div class="right" data-bind="click: handleArrowEvent"></div>
-        </div>
-        <div class="row-container">
-          <div class="left" data-bind="click: handleArrowEvent"></div>
-          <div class="down" data-bind="click: handleArrowEvent"></div>
-        </div>
-      </div>
-    </div>
-  </body>
-  <script type="text/javascript" src="script.js"></script>
+  </div>
+</body>
+<script type="text/javascript" src="script.js"></script>
+
 </html>

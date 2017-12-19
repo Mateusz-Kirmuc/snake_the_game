@@ -42,13 +42,24 @@ header {
   position: relative;
 }
 
-.row {
+.board {
+  border-collapse: collapse;
+  margin: auto;
+  position: relative;
+}
+
+
+/*.row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+}*/
+
+td {
+  padding: 0;
 }
 
 .cell {
