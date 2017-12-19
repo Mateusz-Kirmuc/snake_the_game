@@ -58,14 +58,11 @@ header {
 .board {
   border-collapse: collapse;
   position: relative;
+  border: solid thin;
 }
 
 td {
   padding: 0;
-}
-
-.cell {
-  border: solid thin;
 }
 
 
@@ -84,6 +81,7 @@ td {
   -ms-flex-align: center;
   align-items: center;
   border: solid thin;
+  top: 0;
 }
 
 .message {
